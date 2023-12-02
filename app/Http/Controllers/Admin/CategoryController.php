@@ -51,7 +51,12 @@ class CategoryController extends Controller
 
         Category::create($data);
 
-        return redirect()->back();
+        $notify = [
+            'message' => 'Category created successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notify);
     }
 
     /**
@@ -99,7 +104,12 @@ class CategoryController extends Controller
 
         $category->update($data);
 
-        return redirect()->back();
+        $notify = [
+            'message' => 'Category updated successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notify);
     }
 
     /**
@@ -114,6 +124,11 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->back();
+        $notify = [
+            'message' => 'Category deleted successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notify);
     }
 }
