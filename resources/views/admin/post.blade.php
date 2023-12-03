@@ -25,6 +25,7 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Category</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -35,46 +36,55 @@
 
                                 <td>
                                     <img src="{{ asset('post_thumbnails/' . $post->thumbnail) }}"
-                                        alt="{{ $post->title }}"style="width: 100px;">
+                                        alt="{{ $post->title }}"style="width: 100px; max-height:100px;">
                                 </td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->description }}</td>
                                 <td>{{ $post->category_name }}</td>
+                                <td>
+                                    @if ($post->status == 1)
+                                        <span class="badge badge-success p-2">Public</span>
+                                    @else
+                                        <span class="badge badge-danger p-2">Private</span>
+                                    @endif
+                                </td>
 
                                 <td class="d-flex justify-content-center">
-                                    {{-- <button class="btn btn-sm btn-primary mr-2" data-toggle="modal"
+                                    <button class="btn btn-sm btn-primary mr-2" data-toggle="modal"
                                         data-target="{{ '#postEdit' . $post->id . 'Modal' }}"><i
                                             class="fas fa-edit"></i></button>
-                                <form action="{{ route('post.destroy', $post->id) }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="delete btn btn-sm btn-danger"><i
-                                            class="fa fa-trash"></i></button>
-                                </form> --}}
+                                    <form action="{{ route('post.destroy', $post->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="delete btn btn-sm btn-danger"><i
+                                                class="fa fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
 
-                            {{-- <!-- post Edit Modal-->
+                            <!-- post Edit Modal-->
                             <div class="modal fade" id="{{ 'postEdit' . $post->id . 'Modal' }}" tabindex="-1"
                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Edit {{ $post->name }}</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit {{ $post->title }}</h5>
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
-                                        <form action="{{ route('post.update', $post->id) }}" method="post">
+                                        <form action="{{ route('post.update', $post->id) }}" method="post"
+                                            enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="_method" value="put">
                                             <div class="modal-body">
+                                                {{-- title --}}
                                                 <div class="form-group">
-                                                    <label for="name">post Name</label>
-                                                    <input type="text" name="name"
-                                                        class="form-control @error('name') is-invalid @enderror"
-                                                        value="{{ $post->name }}">
-                                                    @error('name')
+                                                    <label for="title">Title</label>
+                                                    <input type="text" name="title"
+                                                        class="form-control @error('title') is-invalid @enderror"
+                                                        value="{{ $post->title }}">
+                                                    @error('title')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>
                                                                 {{ $message }}
@@ -82,8 +92,23 @@
                                                         </span>
                                                     @enderror
                                                 </div>
+
+                                                {{-- category --}}
                                                 <div class="form-group">
-                                                    <label for="description">post Description</label>
+                                                    <label for="category">Category</label>
+                                                    <select name="category_id" class="form-control">
+                                                        @foreach ($categories as $category)
+                                                            <option value="{{ $category->id }}"
+                                                                @if ($category->id == $post->category_id) @selected(true) @endif>
+                                                                {{ $category->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                {{-- description --}}
+                                                <div class="form-group">
+                                                    <label for="description">Description</label>
                                                     <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="5">{{ $post->description }}</textarea>
                                                     @error('description')
                                                         <span class="invalid-feedback" role="alert">
@@ -93,17 +118,32 @@
                                                         </span>
                                                     @enderror
                                                 </div>
+
+                                                {{-- thumbnail --}}
+                                                <div class="form-group">
+                                                    <label for="thumbnail">Thumbnail</label>
+                                                    <input type="file" name="thumbnail" class="form-control-file">
+                                                    <input type="hidden" name="old_thumbnail"
+                                                        value="{{ $post->thumbnail }}">
+                                                </div>
+
+                                                {{-- status --}}
+                                                <label for="status" class="form-check-label">
+                                                    <input type="checkbox" name="status" id="status" value="1"
+                                                        @if ($post->status == 1) @checked(true) @endif>
+                                                    Publish Post
+                                                </label>
                                             </div>
                                             <div class="modal-footer">
                                                 <a type="button" class="btn btn-sm btn-light"
                                                     data-dismiss="modal">Cancel</a>
                                                 <button type="submit" class="btn btn-sm btn-primary">Update
-                                                    post</button>
+                                                    Post</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         @endforeach
                     </tbody>
                 </table>
@@ -128,8 +168,8 @@
                         {{-- title --}}
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title') }}">
+                            <input type="text" name="title"
+                                class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
                             @error('title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>
