@@ -12,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item @if ($page == 'Dashboard') active @endif">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -22,7 +22,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item @if ($page == 'Categories') active @endif">
         <a class="nav-link" href="{{ route('category.index') }}">
             <i class="fas fa-fw fa-table"></i>
             <span>Category</span></a>
@@ -32,7 +32,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item @if ($page == 'Pages') active @endif">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
             aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
