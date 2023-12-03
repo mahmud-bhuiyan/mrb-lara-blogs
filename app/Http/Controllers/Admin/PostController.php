@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderby('id', 'desc')->get();
+        $categories = Category::orderby('name')->get();
 
-        return view('admin.category', compact('categories'));
+        $objPost = new Post();
+        $posts = $objPost->join('categories', 'categories.id', '=', 'posts.category_id')
+            ->select('posts.*', 'categories.name as category_name')->orderby('id', 'desc')->get();
+
+        return view('admin.post', compact('categories', 'posts'));
     }
 
     /**
@@ -40,18 +45,29 @@ class CategoryController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'name' => 'required|unique:categories,name|max:255',
-            'description' => 'required'
+            'title' => 'required',
+            'category_id' => 'required',
+            'description' => 'required',
         ]);
 
         $data = [
-            'name' => $request->name,
-            'description' => $request->description
+            'title' => $request->title,
+            'category_id' => $request->category_id,
+            'description' => $request->description,
+            'status' => $request->status,
         ];
 
-        Category::create($data);
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '-' . $extension;
+            $file->move(public_path('post_thumbnails'), $fileName);
+            $data['thumbnail'] = $fileName;
+        }
 
-        return redirect()->back()->with('success', 'Category created successfully');
+        Post::create($data);
+
+        return redirect()->back()->with('success', 'Post created successfully');
     }
 
     /**
@@ -85,21 +101,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        // dd($category);
-        $request->validate([
-            'name' => 'required|unique:categories,name,' . $category->id . '|max:255',
-            'description' => 'required'
-        ]);
-
-        $data = [
-            'name' => $request->name,
-            'description' => $request->description
-        ];
-
-        $category->update($data);
-
-        return redirect()->back()->with('success', 'Category updated successfully');
+        //
     }
 
     /**
@@ -110,10 +112,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-
-        $category->delete();
-
-        return redirect()->back()->with('success', 'Category deleted successfully');
+        //
     }
 }
