@@ -48,12 +48,14 @@ class PostController extends Controller
         // dd($request->all());
         $request->validate([
             'title' => 'required',
+            'subtitle' => 'required',
             'category_id' => 'required',
             'description' => 'required',
         ]);
 
         $data = [
             'title' => $request->title,
+            'subtitle' => $request->subtitle,
             'category_id' => $request->category_id,
             'description' => $request->description,
             'status' => $request->status,
@@ -105,12 +107,14 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'subtitle' => 'required',
             'category_id' => 'required',
             'description' => 'required',
         ]);
 
         $data = [
             'title' => $request->title,
+            'subtitle' => $request->subtitle,
             'category_id' => $request->category_id,
             'description' => $request->description,
             'status' => $request->status,

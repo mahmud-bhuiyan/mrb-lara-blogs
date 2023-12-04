@@ -23,6 +23,7 @@
                             <th>SL</th>
                             <th>Thumbnail</th>
                             <th>Title</th>
+                            <th>Subtitle</th>
                             <th>Description</th>
                             <th>Category</th>
                             <th>Status</th>
@@ -39,6 +40,7 @@
                                         alt="{{ $post->title }}"style="width: 100px; max-height:100px;">
                                 </td>
                                 <td>{{ $post->title }}</td>
+                                <td>{{ $post->subtitle }}</td>
                                 <td>{{ $post->description }}</td>
                                 <td>{{ $post->category_name }}</td>
                                 <td>
@@ -85,6 +87,21 @@
                                                         class="form-control @error('title') is-invalid @enderror"
                                                         value="{{ $post->title }}">
                                                     @error('title')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>
+                                                                {{ $message }}
+                                                            </strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                {{-- subtitle --}}
+                                                <div class="form-group">
+                                                    <label for="subtitle">subtitle</label>
+                                                    <input type="text" name="subtitle"
+                                                        class="form-control @error('subtitle') is-invalid @enderror"
+                                                        value="{{ $post->subtitle }}">
+                                                    @error('subtitle')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>
                                                                 {{ $message }}
@@ -171,6 +188,21 @@
                             <input type="text" name="title"
                                 class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
                             @error('title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>
+                                        {{ $message }}
+                                    </strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        {{-- subtitle --}}
+                        <div class="form-group">
+                            <label for="title">Subtitle</label>
+                            <input type="text" name="subtitle"
+                                class="form-control @error('subtitle') is-invalid @enderror"
+                                value="{{ old('subtitle') }}">
+                            @error('subtitle')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>
                                         {{ $message }}
