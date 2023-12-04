@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
-
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -66,12 +66,24 @@ class PostController extends Controller
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '-' . $extension;
             $file->move(public_path('post_thumbnails'), $fileName);
+
+            // image resize
+            // $thumbnail = Image::make($file);
+            // $thumbnail->resize(600, 300, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            // $thumbnail->save(public_path('post_thumbnails/' . $fileName));
             $data['thumbnail'] = $fileName;
         }
 
         Post::create($data);
 
-        return redirect()->back()->with('success', 'Post created successfully');
+        $notify = [
+            'message' => 'Post created successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notify);
     }
 
     /**
@@ -133,7 +145,12 @@ class PostController extends Controller
 
         Post::where('id', $id)->update($data);
 
-        return redirect()->back()->with('success', 'Post updated successfully');
+        $notify = [
+            'message' => 'Post updated successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notify);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 @section('mainSection')
     @include('layouts.banner')
-    @include('layouts.trending')
+    {{-- @include('layouts.trending') --}}
 
     <section class="section-sm">
         <div class="container">
@@ -17,7 +17,8 @@
                                     alt="post-thumb">
                             </div>
                             <div class="card-body">
-                                <h3 class="mb-3"><a class="post-title" href="{{ route('single_post_view', $post->id) }}">{{ $post->title }}</a>
+                                <h3 class="mb-3"><a class="post-title"
+                                        href="{{ route('single_post_view', $post->id) }}">{{ $post->title }}</a>
                                 </h3>
                                 <ul class="card-meta list-inline">
                                     <li class="list-inline-item">

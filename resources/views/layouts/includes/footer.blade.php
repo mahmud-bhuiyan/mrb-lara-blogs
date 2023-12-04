@@ -5,23 +5,6 @@
             stroke-width="2" />
     </svg>
 
-    <div class="instafeed text-center mb-5">
-        <h2 class="h3 mb-4">INSTAGRAM POST</h2>
-
-        <div class="instagram-slider">
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/1.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/2.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/4.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/3.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/2.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/1.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/3.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/4.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/2.jpg') }}"></div>
-            <div class="instagram-post"><img src="{{ asset('user_assets/images/instagram/4.jpg') }}"></div>
-        </div>
-    </div>
-
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-5 text-center text-md-left mb-4">
@@ -32,8 +15,7 @@
             </div>
             <div class="col-md-2 text-center mb-4">
                 <a href="index.html"><img class="img-fluid" width="100px"
-                        src="{{ asset('user_assets/images/logo.png') }}"
-                        alt="Reader | Hugo Personal Blog Template"></a>
+                        src="{{ asset('user_assets/images/logo.png') }}" alt="Reader | Hugo Personal Blog Template"></a>
             </div>
             <div class="col-md-5 text-md-right text-center mb-4">
                 <ul class="list-inline footer-list mb-0">
