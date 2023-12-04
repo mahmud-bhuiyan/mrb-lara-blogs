@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
 @section('mainSection')
-    @include('layouts.banner')
-    @include('layouts.trending')
-
     <section class="section-sm">
+        <div class="py-4"></div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8  mb-5 mb-lg-0">
-                    <h2 class="h5 section-title">Recent Post</h2>
+                    <h1 class="h2 mb-4">Showing items from <mark>{{ $posts->first()->category_name }}</mark></h1>
 
                     @foreach ($posts as $post)
                         <article class="card mb-4">
