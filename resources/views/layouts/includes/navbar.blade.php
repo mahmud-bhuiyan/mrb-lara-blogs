@@ -29,13 +29,31 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">Account<i class="ti-angle-down ml-1"></i>
+                            aria-expanded="false">
+                            @auth
+                                @if (auth()->user()->photo)
+                                    <img src="{{ asset('images/user_profile_photos/' . auth()->user()->photo) }}"
+                                        class="rounded-circle" style="width: 30px" alt="{{ auth()->user()->name }}">
+                                @else
+                                    <img src="{{ asset('images/user_profile_photos/user_demo.png') }}"
+                                        class="rounded-circle" style="width: 25px" alt="{{ auth()->user()->name }}">
+                                @endif
+                            @else
+                                <img src="{{ asset('images/user_profile_photos/user_demo.png') }}" class="rounded-circle"
+                                    style="width: 25px" alt="user_demo_image">
+                            @endauth
+
+
+                            <i class="ti-angle-down ml-1"></i>
                         </a>
                         <div class="dropdown-menu">
                             @auth
-                                <a class="dropdown-item" href="author.html">Profile</a>
+                                <a class="dropdown-item" href="">{{ auth()->user()->name }}</a>
 
-                                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button class="logout dropdown-item" type="submit">Logout</button>
+                                </form>
                             @else
                                 <a class="dropdown-item" href="{{ route('login') }}">Login</a>
 

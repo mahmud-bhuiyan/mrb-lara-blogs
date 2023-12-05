@@ -21,7 +21,9 @@
                                 Category: <span class="text-primary"> <b>{{ $post->category_name }}</b></span>
                             </li>
                         </ul>
-                        <div class="content">{{ $post->description }}</div>
+                        <div class="content"> @php
+                            echo $post->description;
+                        @endphp</div>
                     </article>
 
                 </div>

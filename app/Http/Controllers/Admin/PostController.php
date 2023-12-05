@@ -64,7 +64,7 @@ class PostController extends Controller
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '-' . $extension;
+            $fileName = time() . '.' . $extension;
             $file->move(public_path('post_thumbnails'), $fileName);
 
             // image resize
@@ -138,7 +138,7 @@ class PostController extends Controller
             }
             $file = $request->file('thumbnail');
             $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '-' . $extension;
+            $fileName = time() . '.' . $extension;
             $file->move(public_path('post_thumbnails'), $fileName);
             $data['thumbnail'] = $fileName;
         }

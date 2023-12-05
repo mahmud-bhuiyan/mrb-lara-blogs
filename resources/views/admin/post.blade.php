@@ -41,7 +41,11 @@
                                 </td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->subtitle }}</td>
-                                <td>{{ $post->description }}</td>
+                                <td>
+                                    @php
+                                        echo $post->description;
+                                    @endphp
+                                </td>
                                 <td>{{ $post->category_name }}</td>
                                 <td>
                                     @if ($post->status == 1)
@@ -67,7 +71,7 @@
                             <!-- post Edit Modal-->
                             <div class="modal fade" id="{{ 'postEdit' . $post->id . 'Modal' }}" tabindex="-1"
                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Edit {{ $post->title }}</h5>
@@ -126,7 +130,7 @@
                                                 {{-- description --}}
                                                 <div class="form-group">
                                                     <label for="description">Description</label>
-                                                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="5">{{ $post->description }}</textarea>
+                                                    <textarea name="description" class="summernote form-control @error('description') is-invalid @enderror" rows="5">{{ $post->description }}</textarea>
                                                     @error('description')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>
@@ -171,7 +175,7 @@
     <!-- post Add Modal-->
     <div class="modal fade" id="PostAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add New Post</h5>
@@ -225,7 +229,7 @@
                         {{-- description --}}
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea name="description" class="form-control @error('description') is-invalid @enderror"
+                            <textarea name="description" class="summernote form-control @error('description') is-invalid @enderror"
                                 value="{{ old('description') }}" rows="5"></textarea>
                             @error('description')
                                 <span class="invalid-feedback" role="alert">
